@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Post;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
@@ -26,8 +27,8 @@ Route::get('/dashboard', function () {
      */
     $resp = Http::asForm()->post('https://accounts.spotify.com/api/token', [
         'grant_type' => 'client_credentials',
-        'client_id' => '678788cfca4249048800ebd3a13fa3ae',
-        'client_secret' => '066373a6b7394855a9e2c4c67015167e'
+        'client_id' => env('SPOTIFY_CLIENT_ID'),
+        'client_secret' => env('SPOTIFY_CLIENT_SECRET')
     ]);
 
     $access = $resp->collect();
@@ -42,7 +43,7 @@ Route::get('/dashboard', function () {
     $posts = Post::query()
         ->where('show_id', '=', $show['id'])
         ->with(['user', 'comments'])
-        ->orderBy('created_at', 'desc')
+        ->latest()
         ->get();
 
     return Inertia::render('Dashboard', [
@@ -51,13 +52,9 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/post', function (Request $request) {
-    $v = $request->validate([
-        'body' => 'required',
-        'show_id' => 'required',
-    ]);
-
-    $request->user()->posts()->create($v);
+Route::middleware('auth')->controller(PostController::class)->group(function () {
+    Route::post('/post', 'store');
+    Route::delete('/post/{post}', 'destroy');
 });
 
 Route::middleware('auth')->group(function () {

@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\User;
 use Inertia\Middleware;
+use Illuminate\Http\Request;
 
 class HandleInertiaRequests extends Middleware
 {
