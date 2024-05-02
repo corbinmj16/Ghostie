@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Models\Post;
 use Inertia\Inertia;
@@ -55,6 +56,11 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->controller(PostController::class)->group(function () {
     Route::post('/post', 'store');
     Route::delete('/post/{post}', 'destroy');
+});
+
+Route::middleware('auth')->controller(CommentController::class)->group(function () {
+    Route::post('/comment', 'store');
+    Route::delete('/comment/{comment}', 'destroy');
 });
 
 Route::middleware('auth')->group(function () {

@@ -29,8 +29,8 @@ export default function PostForm() {
                     </label>
                     <textarea
                         id="comment"
-                        rows={4}
-                        className="w-full max-h-[100px] px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                        rows={2}
+                        className="w-full max-h-[100px] px-0 text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                         placeholder="Post something..."
                         required
                         onChange={(e) => setData("body", e.target.value)}

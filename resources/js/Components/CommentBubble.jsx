@@ -4,7 +4,7 @@ export default function CommentBubble({ comment }) {
     const [isDropdownShowing, setIsDropdownShowing] = useState(false);
 
     return (
-        <div className="flex items-start gap-2.5">
+        <div className="flex items-start gap-2.5 mb-3">
             <div className="flex justify-center flex-col bg-blue-100 w-8 h-8 rounded-full text-center">
                 <p>CJ</p>
             </div>
